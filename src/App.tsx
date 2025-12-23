@@ -1,8 +1,8 @@
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
-      <h1 className="text-3xl font-bold text-indigo-600">
-        Tailwind + Vite Working
+    <div className="min-h-screen bg-primary flex items-center justify-center">
+      <h1 className="text-4xl font-bold text-white">
+        TAILWIND CONFIG IS WORKING
       </h1>
     </div>
   );
