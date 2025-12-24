@@ -2,6 +2,7 @@ import { useState } from "react";
 import { adminSignupApi } from "./api/auth.api";
 import { authStorage } from "./services/auth.storage";
 import type { AuthResponse } from "./types/auth.types";
+import { Link } from "react-router-dom";
 
 function Signup() {
   const [tenantName, setTenantName] = useState("");
@@ -22,7 +23,7 @@ function Signup() {
         password,
       });
 
-      const data = res.data as AuthResponse;
+      const data = res.data.data as AuthResponse;
 
       authStorage.set(data.token, data.user);
 
@@ -80,6 +81,12 @@ function Signup() {
           {loading ? "Creating account..." : "Signup"}
         </button>
       </form>
+      <p className="text-text-muted text-sm text-center mt-4">
+        Already have an account?{" "}
+        <Link to="/login" className="text-primary font-medium">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }

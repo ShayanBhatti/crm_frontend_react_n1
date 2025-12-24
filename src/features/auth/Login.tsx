@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginApi } from "./api/auth.api";
 import { authStorage } from "./services/auth.storage";
 import type { AuthResponse } from "./types/auth.types";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ function Login() {
 
     try {
       const res = await loginApi({ email, password });
-      const data = res.data as AuthResponse;
+      const data = res.data.data as AuthResponse;
 
       authStorage.set(data.token, data.user);
 
@@ -65,6 +66,12 @@ function Login() {
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+      <p className="text-text-muted text-sm text-center mt-4">
+        Don’t have an account?{" "}
+        <Link to="/signup" className="text-primary font-medium">
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 }
