@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { loginApi } from "./api/auth.api";
+import { adminSignupApi } from "./api/auth.api";
 import { authStorage } from "./services/auth.storage";
 import type { AuthResponse } from "./types/auth.types";
 
-function Login() {
+function Signup() {
+  const [tenantName, setTenantName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,16 +16,21 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await loginApi({ email, password });
+      const res = await adminSignupApi({
+        tenantName,
+        email,
+        password,
+      });
+
       const data = res.data as AuthResponse;
 
       authStorage.set(data.token, data.user);
 
-      console.log("LOGIN SUCCESS:", data);
+      console.log("SIGNUP SUCCESS:", data);
 
       // later → navigate("/app/dashboard")
     } catch (err: any) {
-      setError(err?.response?.data?.message || "Login failed");
+      setError(err?.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
@@ -33,13 +39,22 @@ function Login() {
   return (
     <div className="bg-surface p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 className="text-3xl font-heading text-primary mb-6 text-center">
-        Login
+        Signup
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
+          type="text"
+          placeholder="Tenant Name"
+          className="w-full px-4 py-2 rounded-md bg-bg border border-muted"
+          value={tenantName}
+          onChange={(e) => setTenantName(e.target.value)}
+          required
+        />
+
+        <input
           type="email"
-          placeholder="Email"
+          placeholder="Admin Email"
           className="w-full px-4 py-2 rounded-md bg-bg border border-muted"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -62,11 +77,11 @@ function Login() {
           disabled={loading}
           className="w-full bg-primary text-text-inverse py-2 rounded-md"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Creating account..." : "Signup"}
         </button>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Signup;

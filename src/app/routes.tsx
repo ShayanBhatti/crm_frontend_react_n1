@@ -3,6 +3,7 @@ import AuthLayout from "../components/layout/AuthLayout";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import Login from "../features/auth/Login";
 import Dashboard from "../features/dashboard/Dashboard";
+import Signup from "../features/auth/Signup";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path: "/signup",
+        element: <Signup/>,
+      }
     ],
   },
   {
