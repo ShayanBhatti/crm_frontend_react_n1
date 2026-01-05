@@ -3,6 +3,7 @@ import { loginApi } from "./api/auth.api";
 import { authStorage } from "./services/auth.storage";
 import type { AuthResponse } from "./types/auth.types";
 import { Link } from "react-router-dom";
+import { loaderService } from "../../lib/loader/loader.service";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -72,7 +73,12 @@ function Login() {
           Sign Up
         </Link>
       </p>
+ <button onClick={() => {
+   loaderService.start();
+   setTimeout(() => loaderService.stop(), 2000);
+ }}>  Test me </button>
     </div>
+   
   );
 }
 
